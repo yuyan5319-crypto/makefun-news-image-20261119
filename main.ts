@@ -312,80 +312,106 @@ frame(10, 10, W - 20, H - 20, 3, INK);
 frame(18, 18, W - 36, H - 36, 1, INK);
 
 // Masthead
-centerText(40, 'THE WORLD TODAY', 10, INK, true);
-centerText(126, 'THE NEWS OF THE DAY, IN ONE PICTURE', 2, GRAY);
-rect(36, 150, W - 72, 3, INK);
+centerText(32, 'THE WORLD TODAY', 8, INK, true);
+centerText(96, 'THE NEWS OF THE DAY, IN ONE PICTURE', 2, GRAY);
+rect(36, 120, W - 72, 3, INK);
 
 // Date bar
-rect(36, 160, W - 72, 46, INK);
-centerText(172, 'THURSDAY 19 NOVEMBER 2026', 3, WHITE, true);
+rect(36, 130, W - 72, 42, INK);
+centerText(137, 'THURSDAY 19 NOVEMBER 2026 - ALL TIMES UTC', 3, WHITE, true);
 
 // Lead story: the Shenzhen trilateral
-drawText(36, 224, 'SHENZHEN · CHINA · APEC SUMMIT', 2, RED, true);
-drawText(36, 248, 'TRUMP, XI AND', 6, INK, true);
-drawText(36, 290, 'PUTIN MEET IN', 6, INK, true);
-drawText(36, 332, 'SHENZHEN', 6, INK, true);
-drawPara(36, 384,
+drawText(36, 184, 'SHENZHEN · CHINA · APEC SUMMIT', 2, RED, true);
+drawText(36, 206, 'TRUMP, XI AND', 5, INK, true);
+drawText(36, 243, 'PUTIN MEET IN', 5, INK, true);
+drawText(36, 280, 'SHENZHEN', 5, INK, true);
+drawPara(36, 326,
   'THE FIRST EVER THREE-WAY MEETING OF THE US, CHINESE AND RUSSIAN ' +
   'LEADERS OPENS AT THE APEC SUMMIT. NUCLEAR ARMS, IRAN AND UKRAINE ' +
   'ARE ON THE TABLE. OFFICIALS SAY NO DEAL IS EXPECTED.',
   2, 500, 20, INK);
-shenzhenScene(560, 224, 428, 260);
-rect(36, 500, W - 72, 3, INK);
+shenzhenScene(560, 184, 428, 242);
+rect(36, 440, W - 72, 3, INK);
 
-// Story grid: two columns, three rows of boxes.
-type Story = { head: string; body: string; icon: (x: number, y: number) => void };
+// UTC timeline — only times the sources state.
+drawText(36, 450, 'THE DAY IN UTC', 2, RED, true);
+drawText(36, 472,
+  '01:45 UTC · APEC PLENARY OPENS IN SHENZHEN  ·  08:00 UTC · ICJ READS ROHINGYA VERDICT  ·  AFTERNOON · TRILATERAL TALKS OPEN',
+  1, INK);
+drawText(36, 490,
+  '14:30 UTC · ANTHROPIC SHARES DEBUT ON NASDAQ  ·  EVENING · GTA VI ROLLS OUT WORLDWIDE  ·  19 NOV · EVERY ITEM BELOW FIRST REPORTED TODAY',
+  1, INK);
+
+// The day in 50 stories: lead (1) + grid (40) + in brief (9).
+centerText(510, '50 STORIES, EACH WITH ITS SOURCE - ALL REPORTED 19 NOV 2026', 2, INK, true);
+
+// Dense two-column grid: numbered headline + source line per story.
+type Story = { head: string; src: string };
 const stories: Story[] = [
-  {
-    head: 'WORLD COURT RULES TODAY',
-    body: 'THE ICJ IN THE HAGUE DECIDES WHETHER MYANMAR COMMITTED GENOCIDE AGAINST THE ROHINGYA. GAMBIA BROUGHT THE CASE IN 2019.',
-    icon: iconScales,
-  },
-  {
-    head: 'TANKERS HIT IN HORMUZ',
-    body: 'IRAN SAYS THREE TANKERS CAUGHT FIRE AFTER HITTING MINES EAST OF THE STRAIT. ANOTHER TANKER IS HIT, A UK BODY REPORTS.',
-    icon: iconTankerFire,
-  },
-  {
-    head: 'JEFFRIES NOMINATED',
-    body: 'HOUSE DEMOCRATS NOMINATE HAKEEM JEFFRIES 251-11. HE IS SET TO BECOME THE FIRST BLACK SPEAKER OF THE US HOUSE.',
-    icon: iconCapitol,
-  },
-  {
-    head: 'GTA VI LAUNCHES WORLDWIDE',
-    body: 'ROCKSTAR\'S GRAND THEFT AUTO VI GOES ON SALE AROUND THE WORLD TO NEAR-PERFECT REVIEWS, RETURNING PLAYERS TO VICE CITY.',
-    icon: iconController,
-  },
-  {
-    head: 'KASHMIR COMMANDER KILLED',
-    body: 'INDIAN POLICE KILL LASHKAR COMMANDER LATEEF BHAT IN AN ENCOUNTER IN JAMMU AND KASHMIR, OFFICIALS SAY.',
-    icon: iconMountains,
-  },
-  {
-    head: 'VOYAGER 1 PASSES A MILESTONE',
-    body: 'NASA\'S VOYAGER 1, LAUNCHED IN 1977, REACHES ONE LIGHT-DAY FROM EARTH, THE FARTHEST ANY HUMAN OBJECT HAS FLOWN.',
-    icon: iconVoyager,
-  },
+  { head: 'ICJ TO RULE ON ROHINGYA GENOCIDE CASE', src: 'AL JAZEERA · THE HAGUE' },
+  { head: 'THREE TANKERS HIT MINES EAST OF HORMUZ', src: 'NDTV · GULF' },
+  { head: 'TANKER HIT BY PROJECTILE OFF OMAN', src: 'GULF NEWS · UKMTO' },
+  { head: 'GULF STATES REPEL IRAN DRONE ATTACKS', src: 'MANILA TIMES · GULF' },
+  { head: 'US, VENEZUELA SIGN DEAL TO RESTORE MILITARY TIES', src: 'THE HINDU · CARACAS' },
+  { head: 'HEGSETH LANDS IN COLOMBIA AFTER VENEZUELA TRIP', src: 'AP · BOGOTA' },
+  { head: 'US-SAUDI NUCLEAR DEAL SATISFACTORY, IAEA SAYS', src: 'THE HINDU · VIENNA' },
+  { head: 'US REISSUES SECURITY WARNINGS IN BAHRAIN, SAUDI', src: 'NDTV · GULF' },
+  { head: 'CRIMEA BRIDGE ATTACKED AGAIN, RUSSIA SAYS', src: 'BBC · UKRAINE WAR' },
+  { head: 'ISRAELI TANKS CROSS GAZA CEASEFIRE LINE', src: 'BBC · GAZA' },
+  { head: 'SIX KILLED IN GAZA, INCLUDING A CHILD', src: 'AFP · GAZA' },
+  { head: 'BANGLADESH DEPLOYS PARAMILITARY AMID UNREST', src: 'THE HINDU · DHAKA' },
+  { head: 'BANGLADESH FLIPS NUCLEAR SWITCH, RUSSIAN PLANT', src: 'NDTV · ENERGY' },
+  { head: 'HONDURAS: FOUR ATTACKS LEAVE 12 DEAD', src: 'SBS · CENTRAL AMERICA' },
+  { head: 'HAITI, EL SALVADOR INK SECURITY DEAL', src: 'MANILA TIMES · AMERICAS' },
+  { head: 'THAILAND ORDERS CLEAN WATER FOR POLLUTION VICTIMS', src: 'MANILA TIMES · BANGKOK' },
+  { head: 'INDIA POLICE KILL REBEL LEADER IN KASHMIR', src: 'MANILA TIMES · SRINAGAR' },
+  { head: 'RAJNATH SINGH IN TOKYO FOR INDIA-JAPAN 2+2', src: 'NDTV · TOKYO' },
+  { head: 'INDIA, CANADA EYE DEFENCE PACT AT MODI VISIT', src: 'THE HINDU · OTTAWA' },
+  { head: 'MODI MEETS PRINCE AND PRINCESS OF WALES', src: 'THE HINDU · LONDON' },
+  { head: 'NIA ARRESTS KHALISTAN MAN DEPORTED FROM US', src: 'THE HINDU · PUNJAB' },
+  { head: 'CHINA SACKS SCIENTIST AFTER CHILD DIES IN GENE TRIAL', src: 'NDTV · BEIJING' },
+  { head: 'TAKAICHI GETS COLD WELCOME ON CHINA ARRIVAL', src: 'SBS · APEC' },
+  { head: 'TRUMP, TAKAICHI TO TALK BY PHONE AFTER SUMMIT', src: 'NIKKEI · TOKYO' },
+  { head: 'CANADA ADJUSTS CHINA TIES, CARNEY SAYS', src: 'JAGRAN JOSH · OTTAWA' },
+  { head: 'FRANCE JAILS 3 WOMEN FOR JOINING ISIS IN SYRIA', src: 'NDTV · PARIS' },
+  { head: 'FRENCH MINISTER: MELENCHON COULD WIN PRESIDENCY', src: 'JAGRAN JOSH · PARIS' },
+  { head: 'ALLEGED RUSSIAN AGENT HELD OVER US TECH SPYING', src: 'AP · WASHINGTON' },
+  { head: 'GRAND JURY INDICTS MAN OVER FOILED TEMPLE PLOT', src: 'MANILA TIMES · ILLINOIS' },
+  { head: 'JEFFRIES NOMINATED 251-11 FOR HOUSE SPEAKER', src: 'DAWN · WASHINGTON' },
+  { head: '236 ANTI-TRUMP PROTESTERS FREED', src: 'ICHRP · UNITED STATES' },
+  { head: 'MUSLIMS TO OUTNUMBER CHRISTIANS BY 2035', src: 'PEW · DEMOGRAPHICS' },
+  { head: '1 IN 4 CHILDREN NOW LIVE IN CONFLICT ZONES', src: 'SAVE THE CHILDREN · AID' },
+  { head: 'CYCLONE AKVAN NEARS ANDHRA PRADESH', src: 'JAGRAN JOSH · WEATHER' },
+  { head: 'M5.7 QUAKE HITS KUMAMOTO, JAPAN', src: 'SBS · TOKYO' },
+  { head: 'RED CRABS BEGIN MARCH ON CHRISTMAS ISLAND', src: 'MANILA TIMES · NATURE' },
+  { head: 'CLIMATE PRESSURE HITS GLOBAL WINE OUTPUT', src: 'MANILA TIMES · CLIMATE' },
+  { head: 'GTA VI LAUNCHES WORLDWIDE TO RAVE REVIEWS', src: 'AP · GAMING' },
+  { head: 'ANTHROPIC SHARES DEBUT ON NASDAQ AT $83', src: 'THE ACTUAL NEWS · MARKETS' },
+  { head: 'VAN GOGH SELLS FOR RECORD $190.4M', src: 'AFP · NEW YORK' },
 ];
 const colX = [36, 524];
-const rowY = [516, 640, 764];
-const boxW = 464, boxH = 116;
 for (let i = 0; i < stories.length; i++) {
-  const x = colX[i % 2], y = rowY[Math.floor(i / 2)];
+  const x = colX[i % 2];
+  const y = 540 + Math.floor(i / 2) * 19;
   const st = stories[i];
-  frame(x, y, boxW, boxH, 2, INK);
-  st.icon(x + 12, y + 26);
-  drawPara(x + 84, y + 10, st.head, 2, boxW - 96, 19, RED);
-  drawPara(x + 84, y + 32, st.body, 2, boxW - 96, 17, INK);
+  const n = String(i + 1).padStart(2, '0');
+  drawText(x, y, n, 1, RED, true);
+  drawText(x + 18, y, st.head, 1, INK);
+  drawText(x + 18, y + 9, st.src, 1, GRAY);
 }
 
-// In brief
-drawText(36, 896, 'IN BRIEF', 2, RED, true);
-drawPara(36, 918,
-  'EU PROPOSES A 45BN EURO LOAN FOR UKRAINE · CYCLONE AKVAN NEARS ANDHRA ' +
-  'PRADESH · US DEFENCE CHIEF IN COLOMBIA AFTER A VENEZUELA VISIT · ' +
-  'PAKISTANI JAILED 27 YEARS OVER A TRUMP MURDER PLOT',
-  2, W - 72, 19, INK);
+// In brief: 9 more stories, then the date check.
+rect(36, 928, W - 72, 3, INK);
+drawText(36, 936, 'IN BRIEF', 2, RED, true);
+drawPara(36, 954,
+  'EU PROPOSES A 45BN EURO UKRAINE LOAN · VOYAGER 1 BELIEVED TO HAVE PASSED ONE LIGHT-DAY · ' +
+  'SPACEX STARSHIP LANDS BACK ON ITS PAD · JAVA USERS TOLD TO PATCH AFTER FLAWS · ' +
+  'SENATORS WARN AI CYBER THREATS OUTPACE DEFENCES · MALAYSIA PRESSES ANTHROPIC OVER AI CAMPAIGN · ' +
+  'COCAINE AND MILLIONS OF PILLS SEIZED IN LIBYA · SAUDI ARABIA: DANGER PASSED IN THREE CITIES · ' +
+  'PRINCE HARRY: US GOVERNMENT AND PUBLIC SPLIT ON UKRAINE',
+  1, W - 72, 11, INK);
+centerText(990, 'DATE CHECK: EVERY STORY HERE WAS FIRST REPORTED ON THURSDAY 19 NOVEMBER 2026', 1, RED, true);
+
 
 // ---------------------------------------------------------------- png -----
 const CRC_TABLE = new Int32Array(256);
